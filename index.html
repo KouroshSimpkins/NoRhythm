@@ -12,10 +12,15 @@
       type = "canvas";
     }
 
+    const Application = PIXI.Application,
+          loader = PIXI.Loader.shared,
+          resources = PIXI.Loader.shared.resources,
+          Sprite = PIXI.Sprite;
+
     const app = new PIXI.Application({
       width: 600,
       height: 400,
-      backgroundColor: 0x1099bb,
+      backgroundColor: 0x000000,
       resolution: window.devicePixelRatio || 1,
       autoResize: true,
       antialias: true
@@ -23,7 +28,38 @@
 
     document.body.appendChild(app.view);
 
-    PIXI.utils.sayHello(type);
+    PIXI.Loader.shared
+      .add("assets/character.png")
+      .load(setup);
+
+    let PlayerCharacter, state;
+
+    function setup() {
+        PlayerCharacter = new Sprite(
+        resources["assets/character.png"].texture
+      );
+
+      PlayerCharacter.x = app.renderer.width / 2;
+      PlayerCharacter.y = app.renderer.height / 2;
+      PlayerCharacter.vx = 0;
+      PlayerCharacter.vy = 0;
+
+      state = play;
+
+      app.stage.addChild(PlayerCharacter);
+
+      app.ticker.add((delta) => gameloop(delta));
+    }
+
+    function gameloop(delta) {
+      // do stuff
+      state(delta);
+    }
+
+    function play(delta) {
+      PlayerCharacter.vx = 1;
+      PlayerCharacter.x += PlayerCharacter.vx;
+    }
   </script>
 </body>
 </html>
