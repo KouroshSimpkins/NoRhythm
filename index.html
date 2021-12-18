@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+</head>
+<body>
+  <script src="pixi/pixi.min.js"></script>
+  <script type="text/javascript">
+    let type = "WebGL";
+    if (!PIXI.utils.isWebGLSupported()) {
+      type = "canvas";
+    }
+
+    const app = new PIXI.Application({
+      width: 600,
+      height: 400,
+      backgroundColor: 0x1099bb,
+      resolution: window.devicePixelRatio || 1,
+      autoResize: true,
+      antialias: true
+    });
+
+    document.body.appendChild(app.view);
+
+    PIXI.utils.sayHello(type);
+  </script>
+</body>
+</html>
