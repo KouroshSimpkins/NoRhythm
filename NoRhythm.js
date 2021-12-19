@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 let type = "WebGL";
     if (!PIXI.utils.isWebGLSupported()) {
       type = "canvas";
@@ -59,9 +61,32 @@ let type = "WebGL";
 
     PIXI.Loader.shared
       .add("assets/gun.png")
+      .add("assets/projectile.png")
       .load(setup);
 
     let PlayerCharacter, state;
+
+    var bullets = [];
+    var bulletSpeed = 5;
+
+    function fireBullet(e) {
+      console.log("fire");
+
+      let bullet = createBullet();
+      bullets.push(bullet);
+    }
+
+    function createBullet() {
+      console.log("fire");
+      let bullet = new PIXI.Sprite(resources["assets/projectile.png"].texture);
+      bullet.anchor.set(0.5);
+      bullet.x = PlayerCharacter.x;
+      bullet.y = PlayerCharacter.y;
+      bullet.speed = bulletSpeed;
+      app.stage.addChild(bullet);
+
+      return bullet;
+    }
 
     function setup() {
         PlayerCharacter = new Sprite(
@@ -75,7 +100,8 @@ let type = "WebGL";
       app.stage.addChild(PlayerCharacter);
 
       const left = keyboard("ArrowLeft"),
-            right = keyboard("ArrowRight");
+            right = keyboard("ArrowRight"),
+            spacebar = keyboard("Space");
 
       left.press = () => {
         PlayerCharacter.vx = -5;
@@ -99,7 +125,9 @@ let type = "WebGL";
         }
       };
 
-
+      spacebar.press = () => {
+        fireBullet();
+      };
 
       state = play;
 
