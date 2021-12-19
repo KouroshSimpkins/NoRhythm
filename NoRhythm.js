@@ -27,7 +27,6 @@ let type = "WebGL";
         }
       };
 
-
       key.upHandler = event => {
         if (event.key === key.value) {
           if (key.isDown && key.release) key.release();
@@ -101,7 +100,7 @@ let type = "WebGL";
 
       const left = keyboard("ArrowLeft"),
             right = keyboard("ArrowRight"),
-            spacebar = keyboard("Space");
+            spacebar = keyboard(" ");
 
       left.press = () => {
         PlayerCharacter.vx = -5;
